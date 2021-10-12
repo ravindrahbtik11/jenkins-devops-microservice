@@ -24,11 +24,16 @@ pipeline{
 	agent any
 	// agent { docker { image 'maven:3.6.3'} }
 	// agent { docker { image 'node:current-alpine3.11'} }
-
+	environment {
+		dockerHome = tool 'myDocker'
+		movenHome = tool 'myMoven'
+		PATH = "$dockerHome/bin:$movenHome/bin:$PATH"
+	}
 	stages {
 		stage("Build"){
 			steps{
-				// sh "moven --version"
+				sh "moven --version"
+				sh "docker --version"
 				// sh "node --version"
 				echo "Build"
 				echo "PATH -$PATH"
